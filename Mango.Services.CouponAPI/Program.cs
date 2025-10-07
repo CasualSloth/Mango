@@ -30,4 +30,22 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+ApplyMigrations();
+
 app.Run();
+
+
+void ApplyMigrations()
+{
+    // CreateScope basically gets all the services
+    using (var scope = app.Services.CreateScope())
+    {
+        var _dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+        // If there are any pending migrations, we can simply call Migrate to apply them
+        if (_dbContext.Database.GetPendingMigrations().Count() > 0)
+        {
+            _dbContext.Database.Migrate(); // Applies ALL pending migrations
+        }
+    }
+}
