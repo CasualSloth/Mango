@@ -1,3 +1,5 @@
+using AutoMapper;
+using Mango.Services.CouponAPI;
 using Mango.Services.CouponAPI.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +11,9 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+// Auto registers all classes that implement Profile in this assembly (such as MappingConfig)
+builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
 
 builder.Services.AddControllers();
 
