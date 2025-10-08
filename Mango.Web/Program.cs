@@ -9,8 +9,7 @@ builder.Services.AddControllersWithViews();
 
 // Register Http Client with Coupon Service
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddHttpClient();
-builder.Services.AddHttpClient<ICouponService, CouponService>();
+builder.Services.AddHttpClient(); // Takes care of any service that requires IHttpLoggerFactory
 
 builder.Services.AddScoped<IBaseService, BaseService>();
 builder.Services.AddScoped<ICouponService, CouponService>();

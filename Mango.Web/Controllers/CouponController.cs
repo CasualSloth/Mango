@@ -24,6 +24,10 @@ namespace Mango.Web.Controllers
             {
                 list = JsonConvert.DeserializeObject<List<CouponDto>>(Convert.ToString(response.Result)!);
             }
+            else
+            {
+                TempData["error"] = response?.Message;
+            }
 
             return View(list); // Returns the list to the view (CouponIndex.cshtml - Name of this method) for display
         }
@@ -41,7 +45,12 @@ namespace Mango.Web.Controllers
                 ResponseDto? response = await _couponService.CreateCouponAsync(model);
                 if (response != null && response.IsSuccessful && response.Result != null)
                 {
+                    TempData["success"] = "Coupon created successfully!";
                     return RedirectToAction(nameof(CouponIndex)); // Basically calls CouponIndex so we can see the new Coupon
+                }
+                else
+                {
+                    TempData["error"] = response?.Message;
                 }
             }
 
@@ -56,6 +65,10 @@ namespace Mango.Web.Controllers
                 CouponDto? model = JsonConvert.DeserializeObject<CouponDto>(Convert.ToString(response.Result)!);
                 return View(model);
             }
+            else
+            {
+                TempData["error"] = response?.Message;
+            }
 
             return NotFound(); // .NET's default NotFound page
         }
@@ -66,7 +79,12 @@ namespace Mango.Web.Controllers
             ResponseDto? response = await _couponService.DeleteCouponAsync(couponDto.CouponId);
             if (response != null && response.IsSuccessful)
             {
+                TempData["success"] = "Coupon deleted successfully!";
                 return RedirectToAction(nameof(CouponIndex)); // Basically calls CouponIndex so we can see the new Coupon
+            }
+            else
+            {
+                TempData["error"] = response?.Message;
             }
 
             return View(couponDto); // Return to the CouponDelete page with our current model
