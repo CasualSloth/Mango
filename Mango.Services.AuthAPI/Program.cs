@@ -1,4 +1,5 @@
 using Mango.Services.AuthAPI.Data;
+using Mango.Services.AuthAPI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 });
 
 // Tells it to use Identity framework with default user and role using Entity Framework Core
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
