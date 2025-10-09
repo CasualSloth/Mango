@@ -18,8 +18,9 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 });
 
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
-// Binds the JwtOptions class to the "ApiSettings:JwtOptions" section of appsettings.json
+// Binds the JwtOptions class to the "ApiSettings:JwtOptions" section of appsettings.json. Allows us to inject this object
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("ApiSettings:JwtOptions"));
 
 // Tells it to use Identity framework with default user and role using Entity Framework Core
